@@ -10,8 +10,10 @@ import java.net.http.HttpResponse;
 
 @Component
 public class HttpClientService {
-    private static final String PROJECT_ENDPOINT = "http://localhost:8081/api/projects";
-    private static final String TESTRUN_ENDPOINT = "http://localhost:8081/api/projects/%s/runs";
+//    private static final String PROJECT_ENDPOINT = "http://localhost:8081/api/projects";
+//    private static final String TESTRUN_ENDPOINT = "http://localhost:8081/api/projects/%s/runs";
+    private static final String PROJECT_ENDPOINT = "http://192.168.100.1:8081/api/projects";
+    private static final String TESTRUN_ENDPOINT = "http://192.168.100.1:8081/api/projects/%s/runs";
 
     public String sendRequest(String json) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
