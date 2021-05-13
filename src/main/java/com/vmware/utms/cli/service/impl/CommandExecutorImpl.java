@@ -5,6 +5,7 @@ import com.vmware.utms.cli.models.enums.StreamType;
 import com.vmware.utms.cli.models.jsonExport.TestDetailsInfoDto;
 import com.vmware.utms.cli.models.yamlImport.ImportTestDetailDto;
 import com.vmware.utms.cli.service.CommandExecutor;
+import org.apache.tomcat.jni.OS;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -31,11 +32,16 @@ public class CommandExecutorImpl implements CommandExecutor {
 
         LocalDateTime startDate = LocalDateTime.now();
         Runtime run = Runtime.getRuntime();
-        //Windows
-        Process process = run.exec(PREFIX + detail.getCommand());
+        Process process;
+        String operSys = System.getProperty("os.name").toLowerCase();
+        if (operSys.contains("win")) {
+            //Windows
+            process = run.exec(PREFIX + detail.getCommand());
+        } else {
+            //Linux
+            process = run.exec(detail.getCommand());
+        }
 
-        //Linux
-        //Process process = run.exec(detail.getCommand());
 
 //        String commandArray[] = {"cmd", "/c", "dir", "C:\\Program Files"};
 //        String command = "ping www.codejava.net";
