@@ -28,7 +28,7 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
-            //ReportDto object = this.jsonService.processInput(args);
+            ReportDto object = this.jsonService.processInput(args);
 
             //-------------------
 //            ReportDto object = this.jsonService.processInput("--config", "testing.yaml", "--run-id", "1");
@@ -43,7 +43,7 @@ public class Runner implements CommandLineRunner {
 
             //-------------------SHORT COMMANDS-------------
             //ReportDto object = this.jsonService.processInput("-c", "testing.yaml", "-sn", "UITests", "-tn", "Test4");
-            ReportDto object = this.jsonService.processInput("-c", "testing.yaml", "-sn", "UITests", "-tn", "Test8");
+            //ReportDto object = this.jsonService.processInput("-c", "testing.yaml", "-sn", "UITests", "-tn", "Test8");
             //ReportDto object = this.jsonService.processInput("-c", "testing.yaml");
             this.jsonService.printJsonString(object);
 
