@@ -12,36 +12,38 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class TestCase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
     private String description;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @NonNull
     private String output;
 
-    @NonNull
     private String error;
 
-    @NonNull
     private LocalDateTime start;
 
-    @NonNull
     private LocalDateTime end;
 
     @JsonBackReference
     @ManyToOne
     private TestSuite testSuite;
+
+    public TestCase(String name, String description, Status status, String output, String error, LocalDateTime start, LocalDateTime end) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.output = output;
+        this.error = error;
+        this.start = start;
+        this.end = end;
+    }
 }

@@ -14,21 +14,17 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class TestSuite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @NonNull
     @JsonManagedReference
     @OneToMany(mappedBy = "testSuite", cascade = CascadeType.PERSIST)
     private Set<TestCase> testCases = new HashSet<>();
@@ -37,9 +33,9 @@ public class TestSuite {
     @ManyToOne
     private TestRun testRun;
 
-//    public TestSuite(String name, Status status, Set<TestCase> testCases) {
-//        this.name = name;
-//        this.status = status;
-//        this.testCases = testCases;
-//    }
+    public TestSuite(String name, Status status, Set<TestCase> testCases) {
+        this.name = name;
+        this.status = status;
+        this.testCases = testCases;
+    }
 }
