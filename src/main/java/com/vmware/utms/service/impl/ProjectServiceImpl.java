@@ -1,11 +1,8 @@
 package com.vmware.utms.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.vmware.utms.cli.service.JsonService;
 import com.vmware.utms.domain.entity.Project;
 import com.vmware.utms.domain.entity.TestRun;
 import com.vmware.utms.domain.repository.ProjectRepository;
-import com.vmware.utms.service.PostJson;
 import com.vmware.utms.service.ProjectService;
 import com.vmware.utms.service.TestRunService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static com.vmware.utms.common.ExceptionMessages.PROJECT_ID_NOT_FOUND;
 import static com.vmware.utms.common.ExceptionMessages.PROJECT_NOT_FOUND;
 
 @Service
@@ -38,13 +36,27 @@ public class ProjectServiceImpl implements ProjectService {
     public void addRunToProject(TestRun run, Long projectId) {
         Project project = this.projectRepo.findById(projectId).get();
         project.getTestRuns().add(run);
+
+        long currentRunsCount = project.getTestRuns().size();
+        run.setRunForProject(currentRunsCount);
+
         run.setProject(project);
         this.testRunService.saveRun(run);
         this.projectRepo.save(project);
     }
 
     @Override
+    public Project getById(Long projectId) {
+        return this.projectRepo.findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format(PROJECT_ID_NOT_FOUND, projectId)));
+    }
+
+    @Override
     public Long addProject(Project project) {
+        if (this.existByName(project.getName())) {
+            return this.getProjectByName(project.getName()).getId();
+        }
         return this.projectRepo.save(project).getId();
     }
 

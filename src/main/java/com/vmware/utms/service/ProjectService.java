@@ -17,4 +17,6 @@ public interface ProjectService {
     Long addProject(String projectName, String description);
 
     void addRunToProject(TestRun run, Long projectId);
+
+    Project getById(Long projectId);
 }

@@ -7,6 +7,8 @@ import com.vmware.utms.service.TestRunService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/projects")
 public class CommandLineController {
@@ -24,20 +26,19 @@ public class CommandLineController {
         return this.projectService.getProjectByName(projectName);
     }
 
+    @GetMapping(path = "/{projectId}/runs")
+    public List<TestRun> getProjectTestRuns(@PathVariable Long projectId) {
+        Project project = this.projectService.getById(projectId);
+        return this.testRunService.getProjectTestRuns(project.getId());
+    }
+
     @PostMapping
     public Long registerProject(@RequestBody Project project) {
         return this.projectService.addProject(project);
     }
 
-//    @PostMapping(path = "/{projectName}/runs")
-//    public void addRunToProject(@PathVariable String projectName, @RequestBody TestRun testRun) {
-//        Project project = this.projectService.getProjectByName(projectName);
-//        this.projectService.addRunToProject(testRun, project.getId());
-//    }
-
-    @PostMapping(path = "/{runId}/runs")
-    public void addRunToProject(@PathVariable Long runId, @RequestBody TestRun testRun) {
-        // Project project = this.projectService.getProjectByName(projectName);
-        this.projectService.addRunToProject(testRun, runId);
+    @PostMapping(path = "/{projectId}/runs")
+    public void addRunToProject(@PathVariable Long projectId, @RequestBody TestRun testRun) {
+        this.projectService.addRunToProject(testRun, projectId);
     }
 }

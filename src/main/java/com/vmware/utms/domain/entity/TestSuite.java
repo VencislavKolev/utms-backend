@@ -1,13 +1,9 @@
 package com.vmware.utms.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.vmware.utms.cli.models.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.vmware.utms.domain.entity.enums.Status;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,29 +14,32 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestSuite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     private String name;
 
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @NonNull
     @JsonManagedReference
-    @OneToMany(mappedBy = "testSuite",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "testSuite", cascade = CascadeType.PERSIST)
     private Set<TestCase> testCases = new HashSet<>();
 
     @JsonBackReference
     @ManyToOne
     private TestRun testRun;
 
-    public TestSuite(String name, Status status, Set<TestCase> testCases) {
-        this.name = name;
-        this.status = status;
-        this.testCases = testCases;
-    }
+//    public TestSuite(String name, Status status, Set<TestCase> testCases) {
+//        this.name = name;
+//        this.status = status;
+//        this.testCases = testCases;
+//    }
 }
