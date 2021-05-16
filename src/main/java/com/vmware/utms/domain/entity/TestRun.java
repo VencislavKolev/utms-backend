@@ -24,7 +24,7 @@ public class TestRun {
     private Status status;
 
     @Column(name = "run_for_project")
-    private long runForProject;
+    private Long runForProject;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "testRun", cascade = CascadeType.PERSIST)

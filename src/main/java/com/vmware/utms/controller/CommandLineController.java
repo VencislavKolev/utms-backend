@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/projects")
 public class CommandLineController {
+
     private final ProjectService projectService;
     private final TestRunService testRunService;
 

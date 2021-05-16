@@ -24,7 +24,7 @@ public class Project {
     @NonNull
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     @NonNull
     private String description;
 
